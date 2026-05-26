@@ -1,54 +1,75 @@
 sources:
   - name: wham
     url: https://github.com/Project-CETI/wham.git
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/wham
     branch: main
     prefix: sources/wham
+    imported: true
+    last_imported_commit: 00a8b787c040db23cd51ac4417481a09ac354985
+    local_patches: []
   - name: data-ingest
     url: https://github.com/Project-CETI/data-ingest.git
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/data-ingest
     branch: main
     prefix: sources/data-ingest
+    imported: true
+    last_imported_commit: d7993a4c1e271d90898e54f79f322c02e7b0e7ab
+    local_patches: []
   - name: whale-tag-embedded
     url: https://github.com/Project-CETI/whale-tag-embedded.git
     branch: main
     prefix: sources/whale-tag-embedded
+    imported: false
   - name: sw-combinatoriality
     url: https://github.com/Project-CETI/sw-combinatoriality.git
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/sw-combinatoriality
     branch: main
     prefix: sources/sw-combinatoriality
+    imported: true
+    last_imported_commit: 7228c8eed2cc27ddd23b74c51aeccec9d762389e
+    local_patches: []
   - name: coda-vowel-phonology
     url: https://github.com/Project-CETI/coda-vowel-phonology.git
     branch: main
     prefix: sources/coda-vowel-phonology
+    imported: false
   - name: Complete_automated_PAM_pipelne
     url: https://github.com/Project-CETI/Complete_automated_PAM_pipelne.git
     branch: main
     prefix: sources/acoustics/pam-pipeline
+    imported: false
   - name: Sperm_whale_click_presence_detector
     url: https://github.com/Project-CETI/Sperm_whale_click_presence_detector.git
     branch: main
     prefix: sources/acoustics/click-presence-detector
+    imported: false
   - name: Sperm_whale_localization
     url: https://github.com/Project-CETI/Sperm_whale_localization.git
     branch: main
     prefix: sources/acoustics/localization
+    imported: false
   - name: Analysis-for-ship-noise
     url: https://github.com/Project-CETI/Analysis-for-ship-noise.git
     branch: main
     prefix: sources/acoustics/ship-noise-analysis
+    imported: false
   - name: Database-for-ship-noise
     url: https://github.com/Project-CETI/Database-for-ship-noise.git
     branch: main
     prefix: sources/acoustics/ship-noise-database
+    imported: false
   - name: segmentations_infrastructure
     url: https://github.com/Project-CETI/segmentations_infrastructure.git
     branch: main
     prefix: sources/vision/segmentations-infrastructure
+    imported: false
   - name: whale-birth-data-and-analysis-suite
     url: https://github.com/Project-CETI/whale-birth-data-and-analysis-suite.git
     branch: main
     prefix: sources/vision/whale-birth-analysis
+    imported: false
   - name: theory-of-umt
     url: https://github.com/Project-CETI/theory-of-umt.git
     branch: main
     prefix: sources/theory/theory-of-umt
-
+    imported: false

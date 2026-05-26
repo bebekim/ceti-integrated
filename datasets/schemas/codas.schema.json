@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://projectceti.org/schemas/codas.schema.json",
+  "title": "CETI Coda Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "coda_id",
+    "recording_id",
+    "click_times_seconds",
+    "source_dataset"
+  ],
+  "properties": {
+    "coda_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "recording_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "whale_id": {
+      "type": ["string", "null"]
+    },
+    "social_unit_id": {
+      "type": ["string", "null"]
+    },
+    "timestamp_utc": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "click_times_seconds": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "number",
+        "minimum": 0
+      }
+    },
+    "duration_seconds": {
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "rhythm_label": {
+      "type": ["string", "null"]
+    },
+    "tempo_label": {
+      "type": ["string", "null"]
+    },
+    "rubato_label": {
+      "type": ["string", "null"]
+    },
+    "ornamentation_label": {
+      "type": ["string", "null"]
+    },
+    "spectral_vowel_label": {
+      "type": ["string", "null"]
+    },
+    "source_dataset": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_uri": {
+      "type": ["string", "null"]
+    }
+  }
+}

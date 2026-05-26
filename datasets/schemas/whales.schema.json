@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://projectceti.org/schemas/whales.schema.json",
+  "title": "CETI Whale Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "whale_id",
+    "source_dataset"
+  ],
+  "properties": {
+    "whale_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "display_name": {
+      "type": ["string", "null"]
+    },
+    "social_unit_id": {
+      "type": ["string", "null"]
+    },
+    "sex": {
+      "type": ["string", "null"],
+      "enum": ["female", "male", "unknown", null]
+    },
+    "birth_year": {
+      "type": ["integer", "null"],
+      "minimum": 1900
+    },
+    "source_dataset": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_uri": {
+      "type": ["string", "null"]
+    }
+  }
+}

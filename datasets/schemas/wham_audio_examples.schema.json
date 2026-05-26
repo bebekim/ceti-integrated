@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://projectceti.org/schemas/wham_audio_examples.schema.json",
+  "title": "WhAM Audio Example",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "example_id",
+    "audio_uri",
+    "sample_rate_hz",
+    "duration_seconds",
+    "split",
+    "source_dataset"
+  ],
+  "properties": {
+    "example_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "audio_uri": {
+      "type": "string",
+      "minLength": 1
+    },
+    "coda_id": {
+      "type": ["string", "null"]
+    },
+    "whale_id": {
+      "type": ["string", "null"]
+    },
+    "social_unit_id": {
+      "type": ["string", "null"]
+    },
+    "sample_rate_hz": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "duration_seconds": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "split": {
+      "type": "string",
+      "enum": ["train", "validation", "test", "paper", "unassigned"]
+    },
+    "label_tasks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "source_dataset": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_uri": {
+      "type": ["string", "null"]
+    }
+  }
+}

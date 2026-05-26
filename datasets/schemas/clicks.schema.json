@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://projectceti.org/schemas/clicks.schema.json",
+  "title": "CETI Click Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "click_id",
+    "recording_id",
+    "time_seconds",
+    "source_dataset"
+  ],
+  "properties": {
+    "click_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "recording_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "coda_id": {
+      "type": ["string", "null"]
+    },
+    "whale_id": {
+      "type": ["string", "null"]
+    },
+    "time_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "amplitude": {
+      "type": ["number", "null"]
+    },
+    "sample_rate_hz": {
+      "type": ["integer", "null"],
+      "minimum": 1
+    },
+    "hydrophone_id": {
+      "type": ["string", "null"]
+    },
+    "source_dataset": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_uri": {
+      "type": ["string", "null"]
+    }
+  }
+}
