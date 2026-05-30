@@ -1,0 +1,102 @@
+# CETI Tag Configuration
+# 
+#------------------------------------------------------------------------------
+# Depth Thresholds P1 and P2
+# If pressure < P1, device is considered at the surface
+# If pressure > P2, device is considered submerged
+# Between P1 and P2 is a hysteresis band
+# The state machine uses this information to turn the Recovery
+# board on and off depending on the phase of the deployment
+# Units are bar absolute with reference value of 1 bar (absolute) abs
+# See Keller 4LD...9LD data sheet
+#
+# Depth in meters is approximately 10*pressure_bar
+#
+surface_pressure=0.3
+dive_pressure=0.5
+
+#------------------------------------------------------------------------------
+# Battery Thresholds per cell
+# This is used as a barebones method to determine state of charge
+# The Tag's gas gauge has more sophisticated features available
+# This is just to get started with
+# release_voltage - battery is low, time to release from the whale!
+# critical_voltage - battery is critical, time to put the system to sleep
+# Units are volts
+release_voltage=6.6
+critical_voltage=6.200001
+
+#------------------------------------------------------------------------------
+# Deployment Timeout
+# Indepedent of battery state of charge, if deployment
+# time reaches this value, the tag will release
+# The battery thresholds take precedence
+# Default units are minutes, 
+# (d/D = days, h/H = hours, m/M = minutes, s/S = seconds)
+timeout_release=4d
+
+#------------------------------------------------------------------------------
+# Time of Day Release Time
+# Time of day that the tag will release each day
+# (optional) parameter formatted as hh:mm in UTC (GMT) with 
+# hh = (0..23)
+# mm = (0..59) 
+#------------------------------------------------------------------------------
+# time_of_day_release = 20:00
+
+#------------------------------------------------------------------------------
+# Burn Interval (Minutes)
+# Time interval that the burnwire remains on for releasing tag from whale
+# Default units are minutes, use integers only
+# (d/D = days, h/H = hours, m/M = minutes, s/S = seconds)
+#------------------------------------------------------------------------------
+burn_interval=20m
+
+#------------------------------------------------------------------------------
+# Audio Filter Type
+# valid filter types (non-case sensitive): sinc5, wideband
+#------------------------------------------------------------------------------
+audio_filter = wideband
+
+#------------------------------------------------------------------------------
+# Audio Bitdepth
+# Sets the number of bits used per channel per sample
+# Note: any value <= 16 will default to 16,
+#       any value > 16 will default to 24 
+#------------------------------------------------------------------------------
+audio_bitdepth = 16
+
+#------------------------------------------------------------------------------
+# Audio Sample Rate (kHz)
+# Sets sample rate of audio, round up to nearest valid value (48, 92, 192)
+# anything > 192 kHz is invalid
+# Units are integer values in kHz
+#------------------------------------------------------------------------------
+audio_sample_rate = 96
+
+#------------------------------------------------------------------------------
+# Recovery Board Enable
+#------------------------------------------------------------------------------
+rec_enabled = true
+
+#------------------------------------------------------------------------------
+# Recovery board carrier frequency in MHz
+# valid range: 134.0 - 174.0
+# USA: 144.390
+# DOM: 145.050 
+#------------------------------------------------------------------------------
+rec_freq = 145.050
+
+#------------------------------------------------------------------------------
+# Recovery board callsign
+# callsigns must be valid callsigns (4-6 char in len, optional ssid 0 to 15)
+# example valid callsigns: KC1TUJ-1, J75Y, J75Z-15
+#------------------------------------------------------------------------------
+rec_callsign = J75Z-2
+
+#------------------------------------------------------------------------------
+# Recovery board message recipient callsign
+# callsigns must be valid callsigns (4-6 char in len, optional ssid 0 to 15)
+# example valid callsigns: KC1TUJ-1, J75Y, J75Z-15
+#------------------------------------------------------------------------------
+rec_recipient = KC1QXQ-8

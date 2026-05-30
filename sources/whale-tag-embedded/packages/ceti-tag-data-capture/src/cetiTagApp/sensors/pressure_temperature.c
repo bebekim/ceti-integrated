@@ -1,0 +1,189 @@
+//-----------------------------------------------------------------------------
+// Project:      CETI Tag Electronics
+// Version:      Refer to _versioning.h
+// Copyright:    Cummings Electronics Labs, Harvard University Wood Lab,
+//               MIT CSAIL
+// Contributors: Matt Cummings, Peter Malkin, Joseph DelPreto,
+//               Michael Salino-Hugg, [TODO: Add other contributors here]
+//-----------------------------------------------------------------------------
+
+#include "pressure_temperature.h"
+
+// === Private Local Libraries ===
+#include "../acq/decay.h"
+#include "../device/keller4ld.h"
+#include "../launcher.h"      // for g_stopAcquisition, sampling rate, data filepath, and CPU affinity
+#include "../systemMonitor.h" // for the global CPU assignment variable to update
+#include "../utils/logging.h"
+#include "../utils/memory.h"
+#include "../utils/thread_error.h"
+#include "../utils/timing.h"
+
+// === Private System Libraries ===
+#include <errno.h>
+#include <fcntl.h>
+#include <pthread.h> // to set CPU affinity
+#include <semaphore.h>
+#include <stdint.h>
+#include <string.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <unistd.h> // for usleep()
+
+//-----------------------------------------------------------------------------
+// Global/static variables
+//-----------------------------------------------------------------------------
+int g_pressureTemperature_thread_is_running = 0;
+static int s_log_restarted = 1;
+#define PRESSURE_CSV_HEADER \
+    "Timestamp [us]"        \
+    ",RTC Count"            \
+    ",Notes"                \
+    ",Pressure [bar]"       \
+    ",Water Temperature [C]"
+
+// Store global versions of the latest readings since the state machine will use
+// them.
+CetiPressureSample *g_pressure = NULL;
+static sem_t *s_pressure_data_ready;
+
+//-----------------------------------------------------------------------------
+
+void pressure_update_sample(void) {
+    // Acquire timing and sensor information as close together as possible.
+    g_pressure->sys_time_us = get_global_time_us();
+    g_pressure->rtc_time_s = getRtcCount();
+    g_pressure->error = pressure_get_measurement(&g_pressure->pressure_bar, &g_pressure->temperature_c);
+
+    // push semaphore to indicate to user applications that new data is available
+    sem_post(s_pressure_data_ready);
+}
+
+/**
+ * @brief convert pressure semsor sample to human readable csv
+ */
+void pressure_sample_to_csv(FILE *fp, CetiPressureSample *pSample) {
+    // Write timing information.
+    fprintf(fp, "%ld", g_pressure->sys_time_us);
+    fprintf(fp, ",%d", g_pressure->rtc_time_s);
+    // Write any notes, then clear them so they are only written once.
+    fprintf(fp, ",");
+    if (s_log_restarted) {
+        s_log_restarted = 0;
+        fprintf(fp, "Restarted! | ");
+    }
+
+    if (g_pressure->error != 0) {
+        char err_str[512];
+        fprintf(fp, "ERROR(%s) | ", wt_strerror_r(g_pressure->error, err_str, sizeof(err_str)));
+    }
+
+    // Write the sensor data.
+    fprintf(fp, ",%.3f", g_pressure->pressure_bar);
+    fprintf(fp, ",%.3f", g_pressure->temperature_c);
+    // Finish the row of data and close the file.
+    fprintf(fp, "\n");
+}
+
+//-----------------------------------------------------------------------------
+// CetiTagApp - Main thread
+//-----------------------------------------------------------------------------
+int init_pressureTemperature(void) {
+    char err_str[512];
+    int thread_error = THREAD_OK;
+
+    // setup shared memory
+    g_pressure = create_shared_memory_region(PRESSURE_SHM_NAME, sizeof(CetiPressureSample));
+    if (g_pressure == NULL) {
+        CETI_ERR("Failed to map shared memory: %s", strerror_r(errno, err_str, sizeof(err_str)));
+        thread_error |= THREAD_ERR_SHM_FAILED;
+    }
+
+    // setup semaphore
+    s_pressure_data_ready = sem_open(PRESSURE_SEM_NAME, O_CREAT, 0644, 0);
+    if (s_pressure_data_ready == SEM_FAILED) {
+        CETI_ERR("Failed to create semaphore: %s", strerror_r(errno, err_str, sizeof(err_str)));
+        thread_error |= THREAD_ERR_SEM_FAILED;
+    }
+
+    // Open an output file to write data.
+    FILE *data_file = fopen(PRESSURETEMPERATURE_DATA_FILEPATH, "at");
+    if (data_file == NULL) {
+        CETI_ERR("Failed to open/create an output data file: " PRESSURETEMPERATURE_DATA_FILEPATH ": %s", strerror_r(errno, err_str, sizeof(err_str)));
+        thread_error |= THREAD_ERR_DATA_FILE_FAILED;
+    } else {
+        // There is a chance the file may be empty if a restart occured during
+        // it's creation. Check if the file is empty, and add the header if it is empty (MSH)
+        fseek(data_file, 0, SEEK_END);
+        int size = ftell(data_file);
+        if (size == 0) {
+            fprintf(data_file, PRESSURE_CSV_HEADER "\n");
+        }
+        fclose(data_file); // Close the file.
+        s_log_restarted = 1;
+        CETI_LOG("Using output data file: " PRESSURETEMPERATURE_DATA_FILEPATH);
+    }
+
+    // check that hardware is communicating, but don't worry about values
+    g_pressure->error = pressure_get_measurement(NULL, NULL);
+    if (g_pressure->error != WT_OK) {
+        CETI_ERR("Failed to read pressure sensor: %s", wt_strerror_r(g_pressure->error, err_str, sizeof(err_str)));
+        thread_error |= THREAD_ERR_HW;
+    }
+
+    CETI_LOG("Successfully initialized the pressure/temperature sensor.");
+    return thread_error;
+}
+
+void *pressureTemperature_thread(void *paramPtr) {
+    AcqDecay decay = decay_new(5);
+
+    // Get the thread ID, so the system monitor can check its CPU assignment.
+    g_pressureTemperature_thread_tid = gettid();
+
+    // Main loop while application is running.
+    CETI_LOG("Starting loop to periodically acquire data");
+    g_pressureTemperature_thread_is_running = 1;
+    while (!g_stopAcquisition) {
+        int64_t task_start_us = get_monotonic_time_us();
+        // check if sample should be skipped due to sensor being continually in error.
+        if (decay_shouldSample(&decay)) {
+            // update sample for system
+            pressure_update_sample();
+            update_thread_device_status(THREAD_PRESSURE_ACQ, g_pressure->error, __FUNCTION__);
+
+            // register decay retry rate
+            decay_update(&decay, g_pressure->error);
+
+            // log sample
+            if (!g_stopLogging) {
+                FILE *fp = fopen(PRESSURETEMPERATURE_DATA_FILEPATH, "at");
+                if (fp == NULL) {
+                    CETI_LOG("failed to open data output file: " PRESSURETEMPERATURE_DATA_FILEPATH);
+                } else {
+                    pressure_sample_to_csv(fp, g_pressure);
+                    fclose(fp);
+                }
+            }
+        }
+
+        // Delay to implement a desired sampling rate.
+        // Take into account the time it took to acquire/save data.
+        int64_t elapsed_time_us = get_monotonic_time_us() - task_start_us;
+        int64_t polling_sleep_duration_us = PRESSURE_SAMPLING_PERIOD_US - elapsed_time_us;
+        if (polling_sleep_duration_us > 0) {
+            usleep(polling_sleep_duration_us);
+        }
+    }
+
+    sem_close(s_pressure_data_ready);
+    sem_unlink(PRESSURE_SEM_NAME);
+
+    munmap(g_pressure, sizeof(CetiPressureSample));
+    shm_unlink(PRESSURE_SHM_NAME);
+    g_pressure = NULL;
+
+    g_pressureTemperature_thread_is_running = 0;
+    CETI_LOG("Done!");
+    return NULL;
+}
