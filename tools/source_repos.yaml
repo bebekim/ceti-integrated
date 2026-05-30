@@ -17,9 +17,12 @@ sources:
     local_patches: []
   - name: whale-tag-embedded
     url: https://github.com/Project-CETI/whale-tag-embedded.git
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/whale-tag-embedded
     branch: main
     prefix: sources/whale-tag-embedded
-    imported: false
+    imported: true
+    last_imported_commit: 1e3507aa31b186e524c0f3453336daed3011b2a7
+    local_patches: []
   - name: sw-combinatoriality
     url: https://github.com/Project-CETI/sw-combinatoriality.git
     local_path: /Users/marcus.kim/repositories/individual/project-ceti/sw-combinatoriality
@@ -30,46 +33,73 @@ sources:
     local_patches: []
   - name: coda-vowel-phonology
     url: https://github.com/Project-CETI/coda-vowel-phonology.git
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/coda-vowel-phonology
     branch: main
     prefix: sources/coda-vowel-phonology
-    imported: false
+    imported: true
+    last_imported_commit: be751b8761c87813754dba10ad7068a9e71367c0
+    local_patches: []
   - name: Complete_automated_PAM_pipelne
     url: https://github.com/Project-CETI/Complete_automated_PAM_pipelne.git
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/Complete_automated_PAM_pipelne
     branch: main
     prefix: sources/acoustics/pam-pipeline
-    imported: false
+    imported: true
+    last_imported_commit: 62823c291ce22b115a46f93f1fcd54758d2fbbc9
+    local_patches: []
   - name: Sperm_whale_click_presence_detector
     url: https://github.com/Project-CETI/Sperm_whale_click_presence_detector.git
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/Sperm_whale_click_presence_detector
     branch: main
     prefix: sources/acoustics/click-presence-detector
-    imported: false
+    imported: true
+    last_imported_commit: 9c1c425862439d5701376819689cef657a240220
+    local_patches: []
   - name: Sperm_whale_localization
     url: https://github.com/Project-CETI/Sperm_whale_localization.git
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/Sperm_whale_localization
     branch: main
     prefix: sources/acoustics/localization
-    imported: false
+    imported: true
+    last_imported_commit: cc24c43284ac3bacfaa36bf073da4d8af551f0a0
+    local_patches: []
   - name: Analysis-for-ship-noise
     url: https://github.com/Project-CETI/Analysis-for-ship-noise.git
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/Analysis-for-ship-noise
     branch: main
     prefix: sources/acoustics/ship-noise-analysis
-    imported: false
+    imported: true
+    last_imported_commit: cc526321b417b67655dcc9a8aa5dda240fbc370f
+    local_patches: []
   - name: Database-for-ship-noise
     url: https://github.com/Project-CETI/Database-for-ship-noise.git
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/Database-for-ship-noise
     branch: main
     prefix: sources/acoustics/ship-noise-database
-    imported: false
+    imported: true
+    last_imported_commit: 3c0fe9dc49c08c315995ae92e4de9045e07f2b82
+    local_patches: []
   - name: segmentations_infrastructure
     url: https://github.com/Project-CETI/segmentations_infrastructure.git
-    branch: main
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/segmentations_infrastructure
+    branch: master
     prefix: sources/vision/segmentations-infrastructure
-    imported: false
+    imported: true
+    last_imported_commit: 4d2cba8a021b563c3d875c81772a883316f0a527
+    local_patches: []
   - name: whale-birth-data-and-analysis-suite
     url: https://github.com/Project-CETI/whale-birth-data-and-analysis-suite.git
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/whale-birth-data-and-analysis-suite
     branch: main
     prefix: sources/vision/whale-birth-analysis
-    imported: false
+    imported: true
+    last_imported_commit: 440ccab6c877b757a44e358330eaecb01fa42494
+    local_patches: []
   - name: theory-of-umt
     url: https://github.com/Project-CETI/theory-of-umt.git
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/theory-of-umt
     branch: main
     prefix: sources/theory/theory-of-umt
-    imported: false
+    imported: true
+    last_imported_commit: b5444a8678db8a06fc53317c40efff860d61003a
+    local_patches: []
