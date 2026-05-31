@@ -34,6 +34,8 @@ source-level rewrite is considered.
 
 - [`docs/architecture/overview.md`](docs/architecture/overview.md): platform
   architecture and data-to-model flow.
+- [`docs/architecture/source-import-workflow.md`](docs/architecture/source-import-workflow.md):
+  subtree pull commands and manifest update rules for imported sources.
 - [`docs/glossary/core-terms.md`](docs/glossary/core-terms.md): shared CETI
   domain vocabulary.
 - [`docs/data-contracts/initial-contracts.md`](docs/data-contracts/initial-contracts.md):
