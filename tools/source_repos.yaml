@@ -85,7 +85,7 @@ sources:
     branch: master
     prefix: sources/vision/segmentations-infrastructure
     imported: true
-    last_imported_commit: 4d2cba8a021b563c3d875c81772a883316f0a527
+    last_imported_commit: 22772d5ba39ee99f527462ff0612ebc79cd76c24
     local_patches: []
   - name: whale-birth-data-and-analysis-suite
     url: https://github.com/Project-CETI/whale-birth-data-and-analysis-suite.git
