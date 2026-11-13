@@ -103,3 +103,35 @@ sources:
     imported: true
     last_imported_commit: b5444a8678db8a06fc53317c40efff860d61003a
     local_patches: []
+  - name: avatars-code
+    url: https://github.com/Project-CETI/avatars-code.git
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/avatars-code
+    branch: main
+    prefix: sources/robotics/avatars-code
+    imported: true
+    last_imported_commit: d57146125560941802ca8684df3a4af91b2ce1a6
+    local_patches: []
+  - name: avatars-data
+    url: https://github.com/Project-CETI/avatars-data.git
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/avatars-data
+    branch: main
+    prefix: sources/robotics/avatars-data
+    imported: true
+    last_imported_commit: b8b728e20c292b1d342bfb8f18819864d3fdfea3
+    local_patches: []
+  - name: Glider_Backseat_Driver
+    url: https://github.com/Project-CETI/Glider_Backseat_Driver.git
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/Glider_Backseat_Driver
+    branch: main
+    prefix: sources/robotics/glider-backseat-driver
+    imported: true
+    last_imported_commit: 83489668132fa8445fa1a9e1561ac3217c8741e6
+    local_patches: []
+  - name: Predicting-Mesoscale-Movements-of-Sperm-Whale-Units-in-the-Caribbean-Through-Social-Dynamics
+    url: https://github.com/Project-CETI/Predicting-Mesoscale-Movements-of-Sperm-Whale-Units-in-the-Caribbean-Through-Social-Dynamics.git
+    local_path: /Users/marcus.kim/repositories/individual/project-ceti/Predicting-Mesoscale-Movements-of-Sperm-Whale-Units-in-the-Caribbean-Through-Social-Dynamics
+    branch: main
+    prefix: sources/behavior/mesoscale-movements
+    imported: true
+    last_imported_commit: 547f93d41a4d0c8fc4fa2dc1bd36a9dd1d3aef0c
+    local_patches: []

@@ -25,6 +25,10 @@ Project CETI source repositories are imported with `git subtree`:
 | segmentations_infrastructure | [`sources/vision/segmentations-infrastructure/`](sources/vision/segmentations-infrastructure/) | Video segmentation infrastructure and helpers |
 | whale-birth-data-and-analysis-suite | [`sources/vision/whale-birth-analysis/`](sources/vision/whale-birth-analysis/) | Whale birth data and analysis workflows |
 | theory-of-umt | [`sources/theory/theory-of-umt/`](sources/theory/theory-of-umt/) | Theory of UMT simulations and sweeps |
+| avatars-code | [`sources/robotics/avatars-code/`](sources/robotics/avatars-code/) | RL-based autonomous whale rendezvous via VHF/AOA sensing (Science Robotics 2024) |
+| avatars-data | [`sources/robotics/avatars-data/`](sources/robotics/avatars-data/) | AVATARS field datasets (acoustic + VHF + GPS) |
+| Glider_Backseat_Driver | [`sources/robotics/glider-backseat-driver/`](sources/robotics/glider-backseat-driver/) | Seaglider field-experiment telemetry (France, cross-population data) |
+| Predicting-Mesoscale-Movements-... | [`sources/behavior/mesoscale-movements/`](sources/behavior/mesoscale-movements/) | Social-dynamics-driven sperm whale unit movement data |
 
 `sources/` is treated as imported upstream code. New integration code should wrap
 these projects from `packages/`, `pipelines/`, and `experiments/` before any
@@ -32,7 +36,7 @@ source-level rewrite is considered.
 
 ## Repository Map
 
-- [`docs/PROJECTS.md`](docs/PROJECTS.md): plain-language guide to the 13
+- [`docs/PROJECTS.md`](docs/PROJECTS.md): plain-language guide to the 17
   imported projects and how they fit together.
 - [`docs/architecture/overview.md`](docs/architecture/overview.md): platform
   architecture and data-to-model flow.

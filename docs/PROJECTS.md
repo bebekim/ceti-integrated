@@ -1,9 +1,15 @@
 # The Projects Inside This Repository — A Plain-Language Guide
 
-Think of this repo as a bookshelf holding **13 separate research projects**
+Think of this repo as a bookshelf holding **17 separate research projects**
 that different teams built for Project CETI — the attempt to understand sperm
 whale communication with AI — plus empty shelves (`packages/`, `pipelines/`,
 `experiments/`) where a unified platform will eventually be assembled.
+
+The first 13 are the original acoustic + vision core; the 4 most recent
+(AVATARS robotics, glider field data, mesoscale-movement behavior) extend the
+story into robotics, cross-population data, and social-driven movement. See
+[`docs/papers/source-map.md`](papers/source-map.md) for the full analytical
+mapping of every project to the level it serves.
 
 Every project answers exactly one question. Walk through the questions in
 order and the whole story makes sense.
