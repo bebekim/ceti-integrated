@@ -1,0 +1,15 @@
+numpy
+geopy
+pyproj
+geographiclib
+pandas
+matplotlib
+scipy
+do-mpc
+exif
+opencv-python
+ortools
+imageio
+plotly
+seaborn
+inflect
