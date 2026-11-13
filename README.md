@@ -32,6 +32,8 @@ source-level rewrite is considered.
 
 ## Repository Map
 
+- [`docs/PROJECTS.md`](docs/PROJECTS.md): plain-language guide to the 13
+  imported projects and how they fit together.
 - [`docs/architecture/overview.md`](docs/architecture/overview.md): platform
   architecture and data-to-model flow.
 - [`docs/architecture/source-import-workflow.md`](docs/architecture/source-import-workflow.md):
